@@ -12,7 +12,6 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -69,10 +68,22 @@ public class Driver {
                     ChromeOptions chromeOptions = new ChromeOptions();
                     chromeOptions.setCapability("platform", Platform.ANY);
                     try {
-                        driverPool.set(new RemoteWebDriver(new URL("http://3.236.102.181:4444/wd/hub"),chromeOptions));
+                        driverPool.set(new RemoteWebDriver(new URL("http://54.159.56.193:4444/wd/hub"),chromeOptions));
+                                                                            //this is HUB ip address
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
+                    break;
+                case "remote_firefox":
+                    FirefoxOptions firefoxOptions = new FirefoxOptions();
+                    firefoxOptions.setCapability("platform", Platform.ANY);
+                    try {
+                        driverPool.set(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),firefoxOptions));
+                                                                            //this is HUB ip address
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
         }
         return driverPool.get();
