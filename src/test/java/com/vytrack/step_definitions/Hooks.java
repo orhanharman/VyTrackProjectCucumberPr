@@ -1,5 +1,6 @@
 package com.vytrack.step_definitions;
 
+import com.vytrack.utilities.ConfigurationReader;
 import com.vytrack.utilities.DBUtils;
 import com.vytrack.utilities.Driver;
 import io.cucumber.java.After;
@@ -16,7 +17,11 @@ public class Hooks {
     public void setUp(){
         System.out.println("\tthis is coming from BEFORE");
         Driver.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        Driver.get().manage().window().maximize();
+        String browser = ConfigurationReader.get("browser");
+        if(!browser.contains("mobile")){
+            Driver.get().manage().window().maximize();
+        }
+        //When we use mobile automation project, we need to make this adjustment above
     }
 
     @After
@@ -25,9 +30,7 @@ public class Hooks {
             final byte[] screenshot = ((TakesScreenshot) Driver.get()).getScreenshotAs(OutputType.BYTES);
             scenario.attach(screenshot,"image/png","screenshot");
         }
-
         Driver.closeDriver();
-
     }
 
     @Before("@db")
@@ -41,7 +44,5 @@ public class Hooks {
         System.out.println("\tdisconnecting to database...");
         DBUtils.destroy();
     }
-
-
 
 }

@@ -15,7 +15,6 @@ public class LoginStepDefs {
         String url = ConfigurationReader.get("url");
         //WebDriver driver = Driver.get();
         Driver.get().get(url);
-
     }
 
     @When("the user enters the driver information")
@@ -29,10 +28,9 @@ public class LoginStepDefs {
 
     @Then("the user should be able to login")
     public void the_user_should_be_able_to_login() throws InterruptedException {
-        BrowserUtils.waitFor(3);
+        BrowserUtils.waitFor(6);
         String actualTitle = Driver.get().getTitle();
         Assert.assertEquals("Dashboard",actualTitle);
-
     }
 
     @When("the user enters the sales manager information")
@@ -42,7 +40,6 @@ public class LoginStepDefs {
 
         LoginPage loginPage = new LoginPage();
         loginPage.login(username,password);
-
     }
 
     @When("the user enters the store manager information")
@@ -65,7 +62,6 @@ public class LoginStepDefs {
         System.out.println("expectedTitle = " + expectedTitle);
         BrowserUtils.waitFor(2);
         Assert.assertTrue(Driver.get().getTitle().contains(expectedTitle));
-
     }
 
 }
